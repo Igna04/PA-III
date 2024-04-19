@@ -1,0 +1,13 @@
+.animated-image {
+    width: 200px; /* Sesuaikan lebar gambar sesuai kebutuhan */
+    animation: slide 10s linear infinite; /* Sesuaikan durasi animasi sesuai kebutuhan */
+}
+
+@keyframes slide {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(100%);
+    }
+}
