@@ -5,7 +5,7 @@ Langkah - langkah untuk memasukkan project kedalam repository laptop anda:
 4. Buka Terminal project, kemudian integrasikan project kedalam laptop anda dengan cara :
     1. composer update
     2. mv env.example .env 
-    3. Ubah nama db 
+    3. Ubah nama db menjadi cropsystem
     4. php artisan migrate
     5. php artisan key:generate
     6. php artisan serve
