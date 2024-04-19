@@ -31,11 +31,11 @@ Route::post('/tambahtanaman', function(Request $request) {
         'data' => $request->all(),
     ]);
 
-    if($response) {
-        dd($response);
-    } else {
-        dd('igna');
-    }
+    // if($response) {
+    //     dd('Not Success');
+    // } else {
+    //     dd('Success');
+    // }
 
     // Periksa apakah respons tidak null sebelum mengakses elemen 'data'
     if ($response->json() !== null && array_key_exists('data', $response->json())) {

@@ -37,7 +37,7 @@ class BlogController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request);
+        // dd($request);
         $request ->validate([
             "id_blog" => "required",
             "image" => "required|image|mimes:jpeg,png,jpg,gif|max:2048",
