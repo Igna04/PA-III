@@ -37,42 +37,21 @@ class BlogController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request);
-        $request ->validate([
-            "id_blog" => "required",
-            "image" => "required|image|mimes:jpeg,png,jpg,gif|max:2048",
-            "title" => "required",
-            "content" => "required",
+        $title = $request->title;
+        $content = $request->content;
+        $image = $request->file('image')->store('public/blogs');
+
+        $formData = new Blog();
+        $formData->title = $title;
+        $formData->content = $content;
+        $formData->image = $image;
+        $formData->save();
+
+        return response()->json([
+            'message' => 'Form data saved successfully',
         ]);
-
-        $imagePath = $request-> file('image')->store('public/blogs');
-
-        $blog = Blog::create([
-            "id_blog" => $request->id_blog,
-            "image"=> $imagePath,
-            "title"=> $request->title,
-            "content"=> $request->content,
-        ]);
-
-        if($blog) {
-            return redirect('/home')->with('success', 'Data tanaman berhasil ditambahkan');
-        } else {
-            return back()->with('error', 'Gagal Menambahkan Tanaman');
-        }
-        // if ($response->successful()) {
-        //     // Ambil data terbaru dari endpoint API
-        //     $blogResponse = Http::get('http://localhost:8070/api/data-tanaman');
-        //     $blogs = $blogResponse->json()['data'];
-
-        //     // Redirect atau tampilkan pesan sukses
-        //     return redirect('/home')->with('success', 'Data tanaman berhasil ditambahkan ');
-        // } else {
-        //     // JIka respons gagal, tampilkan pesan error
-        //     return back()->with('error', 'Gagal menambahkan tanaman');
-        // }
-
-        return response()->json(['message'=>'Tanaman created successfully','data' => $blog]);
     }
+    
 }
 //     /**
 //      * edit

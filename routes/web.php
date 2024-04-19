@@ -27,27 +27,20 @@ Route::get('/home', function () {
 });
 
 Route::post('/tambahtanaman', function(Request $request) {
-    $response = Http::post('https://3981-2404-c0-5610-00-43a8-7dbe.ngrok-free.app/api/add-tanaman', [
-        'data' => $request->all(),
-    ]);
+    $title = $request->title;
+    $content = $request->content;
+    $image = $request->image;
 
-    if($response) {
-        dd($response);
-    } else {
-        dd('igna');
+    $response = Http::attach('image', file_get_contents($image), $image->getClientOriginalName())
+            ->post('https://be7a-34-128-109-173.ngrok-free.app/api/add-tanaman', [
+                'title' => $title,
+                'content' => $content
+            ]);
+    if($response->successful()) {
+        return redirect('/home');
     }
-
-    // Periksa apakah respons tidak null sebelum mengakses elemen 'data'
-    if ($response->json() !== null && array_key_exists('data', $response->json())) {
-        $blogs = $response->json()['data'];
-    } else {
-        $errorMessage = $response->json()['message'] ?? 'Data tanaman belum tersedia';
-        $blogs = []; // Atau definisikan nilai default sesuai kebutuhan
-        session()->flash('error', $errorMessage);
-    }
-
-    return view('layouts.crud.home', ['blogs' => $blogs]);
 });
+
 
 Route::get('/bawang', function () {
     return view('layouts.tanaman.bawang');
