@@ -33,8 +33,10 @@ Route::get('/add-tanaman', function() {
     return view('layouts.crud.create');
 });
 
-Route::get('/edit-tanaman/{id}', function() {
-    return view('layouts.crud.edit');
+Route::get('/edit-tanaman/{id}', function($id) {
+    $response = Http::get('http://localhost:8070/api/tanaman-edit/' . $id);
+
+    return view('layouts.crud.edit', ['blog' => $response->json()]);
 });
 
 // Simpan Edit Tanaman

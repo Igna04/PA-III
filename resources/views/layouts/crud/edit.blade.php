@@ -32,7 +32,7 @@
 
                             <div class="form-group">
                                 <label class="font-weight-bold">ID</label>
-                                <input type="text" class="form-control @error('title') is-invalid @enderror" name="title" value="{{ old('title', $blog->title) }}" placeholder="Masukkan ID Tanaman">
+                                <input type="text" class="form-control @error('title') is-invalid @enderror" name="title" value="{{ old('title', $blog['title']) }}" placeholder="Masukkan ID Tanaman">
                             
                                 <!-- error message untuk title -->
                                 @error('title')
@@ -44,7 +44,7 @@
 
                             <div class="form-group">
                                 <label class="font-weight-bold">NAMA TANAMAN</label>
-                                <textarea class="form-control @error('content') is-invalid @enderror" name="content" rows="5" placeholder="Masukkan Nama Tanaman">{{ old('content', $blog->content) }}</textarea>
+                                <textarea class="form-control @error('content') is-invalid @enderror" name="content" rows="5" placeholder="Masukkan Nama Tanaman">{{ old('content', $blog['content']) }}</textarea>
                             
                                 <!-- error message untuk content -->
                                 @error('content')

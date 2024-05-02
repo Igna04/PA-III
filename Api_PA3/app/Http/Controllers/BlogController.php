@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Blog;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class BlogController extends Controller
@@ -54,9 +55,17 @@ class BlogController extends Controller
      * @return void
      */
     public function edit($id) {
-        $blog = DB::table('blogs')->where('id_blog', $id)->get();
-       dd($blog);
-        return view('layouts.crud.edit', compact('blog'));
+        try {
+            $blog = DB::table('blogs')->where('id_blog', $id)->first();
+            
+            if(!$blog) {
+                return response()->json(['message' => 'Blog Tidak Ditemukan'], 404);
+            }
+    
+            return response()->json($blog, 200);
+        } catch(\Exception $e) {
+            return response()->json(['message' => 'Error saat ambil data blog', 'error' => $e->getMessage()], 500);
+        }
     }
     
     /**
@@ -68,7 +77,7 @@ class BlogController extends Controller
      */
     public function update(Request $request, Blog $blog)
     {
-        $blog = Blog::find(id);
+        $blog = Blog::find($id);
 
         if (!$blog) {
             return response()->json(['error' => 'Data tidak ditemukan',], 500);
@@ -125,7 +134,7 @@ class BlogController extends Controller
     public function destroy($id)
     {
         $blog = Blog::find($id);
-        Storage::delete([$blogc-> image]);
+        Storage::delete([$blog-> image]);
         $blog->delete();
 
         if($blog){
