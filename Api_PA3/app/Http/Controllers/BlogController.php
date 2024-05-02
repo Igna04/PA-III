@@ -75,6 +75,7 @@ class BlogController extends Controller
      * @param  mixed $blog
      * @return void
      */
+    
     public function update(Request $request, Blog $blog)
     {
         $blog = Blog::find($id);
