@@ -23,11 +23,6 @@ class BlogController extends Controller
             return response()->json(['error' => 'Terjadi kesalahan saat mengambil data'], 500);
         }
     }
-    
-    // public function create ()
-    // {
-    //     return view('layouts.crud.create');
-    // }
 
     /**
      * store
@@ -52,86 +47,94 @@ class BlogController extends Controller
         ]);
     }
     
-}
-//     /**
-//      * edit
-//      *
-//      * @param  mixed $blog
-//      * @return void
-//      */
-//     public function edit(Blog $blog)
-//     {
-//         return view('crud.edit', compact('blog'));
-//     }
+    /**
+     * edit
+     *
+     * @param  mixed $blog
+     * @return void
+     */
+    public function edit($id) {
+        $blog = DB::table('blogs')->where('id_blog', $id)->get();
+       dd($blog);
+        return view('layouts.crud.edit', compact('blog'));
+    }
     
-//     /**
-//      * update
-//      *
-//      * @param  mixed $request
-//      * @param  mixed $blog
-//      * @return void
-//      */
-//     public function update(Request $request, Blog $blog)
-//     {
-//         $this->validate($request, [
-//             'title'     => 'required',
-//             'content'   => 'required'
-//         ]);
+    /**
+     * update
+     *
+     * @param  mixed $request
+     * @param  mixed $blog
+     * @return void
+     */
+    public function update(Request $request, Blog $blog)
+    {
+        $blog = Blog::find(id);
 
-//         //get data Blog by ID
-//         $blog = Blog::findOrFail($blog->id);
+        if (!$blog) {
+            return response()->json(['error' => 'Data tidak ditemukan',], 500);
+        }
 
-//         if($request->file('image') == "") {
+        return response()->json(['blog' => $blog]);
 
-//             $blog->update([
-//                 'title'     => $request->title,
-//                 'content'   => $request->content
-//             ]);
+        $this->validate($request, [
+            'title'     => 'required',
+            'content'   => 'required',
+            'image'     => 'required'
+        ]);
+        
+        if($request->file('image') == "") {
 
-//         } else {
+            $blog->update([
+                'title'     => $request->title,
+                'content'   => $request->content,
+                'image'     => $request->image
+            ]);
 
-//             //hapus old image
-//             Storage::disk('local')->delete('public/blogs/'.$blog->image);
+        } else {
 
-//             //upload new image
-//             $image = $request->file('image');
-//             $image->storeAs('public/blogs', $image->hashName());
+            //hapus old image
+            Storage::disk('local')->delete('public/blogs/'.$blog->image);
 
-//             $blog->update([
-//                 'image'     => $image->hashName(),
-//                 'title'     => $request->title,
-//                 'content'   => $request->content
-//             ]);
+            //upload new image
+            $image = $request->file('image');
+            $image->storeAs('public/blogs', $image->hashName());
+
+            $blog->update([
+                'image'     => $image->hashName(),
+                'title'     => $request->title,
+                'content'   => $request->content
+            ]);
             
-//         }
+        }
 
-//         if($blog){
-//             //redirect dengan pesan sukses
-//             return redirect()->route('crud.home')->with(['success' => 'Data Berhasil Diupdate!']);
-//         }else{
-//             //redirect dengan pesan error
-//             return redirect()->route('crud.home')->with(['error' => 'Data Gagal Diupdate!']);
-//         }
-//     }
+        if($blog){
+            //redirect dengan pesan sukses
+            return redirect()->route('layouts.crud.home')->with(['success' => 'Data Berhasil Diupdate!']);
+        }else{
+            //redirect dengan pesan error
+            return redirect()->route('layouts.crud.home')->with(['error' => 'Data Gagal Diupdate!']);
+        }
+    }
     
-//     /**
-//      * destroy
-//      *
-//      * @param  mixed $id
-//      * @return void
-//      */
-//     public function destroy($id)
-//     {
-//         $blog = Blog::findOrFail($id);
-//         $blog->delete();
+    /**
+     * destroy
+     *
+     * @param  mixed $id
+     * @return void
+     */
+    public function destroy($id)
+    {
+        $blog = Blog::find($id);
+        Storage::delete([$blogc-> image]);
+        $blog->delete();
 
-//         if($blog){
-//             //redirect dengan pesan sukses
-//             return redirect()->route('crud.home')->with(['success' => 'Data Berhasil Dihapus!']);
-//         }else{
-//             //redirect dengan pesan error
-//             return redirect()->route('crud.home')->with(['error' => 'Data Gagal Dihapus!']);
-//         }
-//     }
+        if($blog){
+            //redirect dengan pesan sukses
+            return redirect()->route('layouts.crud.home')->with(['success' => 'Data Berhasil Dihapus!']);
+        }else{
+            //redirect dengan pesan error
+            return redirect()->route('layouts.crud.home')->with(['error' => 'Data Gagal Dihapus!']);
+        }
+    }
 
-// }
+}

@@ -60,12 +60,12 @@
                                         <td>{{ $blog['title'] }}</td>
                                         <td>{{ $blog['content'] }}</td>
                                         <td class="text-center">
-                                            {{-- <form onsubmit="return confirm('Apakah Anda Yakin ?');" action="{{ route('crud.destroy', $blog['id_blog']) }}" method="POST">
-                                                <a href="{{ route('crud.edit', $blog['id_blog']) }}" class="btn btn-sm btn-primary">Edit</a>
+                                            <form onsubmit="return confirm('Apakah Anda Yakin ?');" action="{{url('/hapus-tanaman')}}" method="POST">
+                                                <a href="{{ url('/edit-tanaman/'.$blog['id_blog']) }}" class="btn btn-sm btn-primary">Edit</a>
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="btn btn-sm btn-danger">Hapus</button>
-                                            </form> --}}
+                                            </form>
                                         </td>
                                     </tr>
                                     @endforeach

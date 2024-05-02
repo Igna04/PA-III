@@ -21,3 +21,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     
 Route::get('/data-tanaman', [BlogController::class, 'index']);
 Route::post('/add-tanaman', [BlogController::class, 'store']);
+Route::put('/edit-tanaman/{id}', [BlogController::class, 'update']);
+Route::delete('/hapus-tanaman', [BlogController::class, 'delete']);

@@ -20,7 +20,7 @@
             <div class="col-md-12">
                 <div class="card border-0 shadow rounded">
                     <div class="card-body">
-                        <form action="" method="POST" enctype="multipart/form-data">
+                        <form action="{{ url('/edit-tanaman')}}" method="POST" enctype="multipart/form-data">
                         
                             @csrf
                             @method('PUT')
@@ -32,7 +32,7 @@
 
                             <div class="form-group">
                                 <label class="font-weight-bold">ID</label>
-                                <input type="text" class="form-control @error('title') is-invalid @enderror" name="title" value="{{ old('title', $blog->title) }}" placeholder="Masukkan Judul Blog">
+                                <input type="text" class="form-control @error('title') is-invalid @enderror" name="title" value="{{ old('title', $blog->title) }}" placeholder="Masukkan ID Tanaman">
                             
                                 <!-- error message untuk title -->
                                 @error('title')
@@ -44,7 +44,7 @@
 
                             <div class="form-group">
                                 <label class="font-weight-bold">NAMA TANAMAN</label>
-                                <textarea class="form-control @error('content') is-invalid @enderror" name="content" rows="5" placeholder="Masukkan Konten Blog">{{ old('content', $blog->content) }}</textarea>
+                                <textarea class="form-control @error('content') is-invalid @enderror" name="content" rows="5" placeholder="Masukkan Nama Tanaman">{{ old('content', $blog->content) }}</textarea>
                             
                                 <!-- error message untuk content -->
                                 @error('content')
